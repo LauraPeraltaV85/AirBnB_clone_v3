@@ -53,9 +53,9 @@ def post_review(place_id):
     new_review = request.get_json()
     if new_review is None:
         abort(400, 'Not a JSON')
-    if not 'user_id' in new_review:
+    if 'user_id' not in new_review:
         abort(400, 'Missing user_id')
-    if not 'text' in new_review:
+    if 'text' not in new_review:
         abort(400, 'Missing text')
     new_review = Review(text=request.json['text'],
                         place_id=place_id, user_id=request.json['user_id'])
