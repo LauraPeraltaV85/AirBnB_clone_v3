@@ -1,4 +1,4 @@
-#!/usr/bin/python1
+#!/usr/bin/python3
 from flask import Flask, jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
@@ -43,7 +43,7 @@ def post_state():
     new_state = request.get_json()
     if new_state is None:
         abort(400, 'Not a JSON')
-    if not 'name' in new_state:
+    if 'name' not in new_state:
         abort(400, 'Missing name')
     new_state = State(name=request.json['name'])
     storage.new(new_state)
