@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Reviews CRUD
+"""
+
 from flask import Flask, jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
