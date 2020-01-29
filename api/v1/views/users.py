@@ -64,8 +64,8 @@ def put_user(user_id):
     if mod_user is None:
         abort(404)
     for key in req_user:
-        if key == 'id' or key == 'email' or
-        key == 'created_at' or key == 'updated_at':
+        if key == 'id' or key == 'email' or\
+           key == 'created_at' or key == 'updated_at':
             pass
         else:
             setattr(mod_user, key, req_user[key])
