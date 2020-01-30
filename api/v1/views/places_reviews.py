@@ -34,7 +34,6 @@ def get_review_by_id(review_id):
         abort(404)
 
 
-
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_reviews_by_id(review_id):
