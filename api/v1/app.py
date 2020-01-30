@@ -6,6 +6,7 @@ AirBnB App
 from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
+import os
 
 app = Flask(__name__)
 
@@ -25,4 +26,7 @@ def error_404(e):
     return(e)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    host = os.getenv('HBNB_API_HOST')
+    port = os.getenv('HBNB_API_POST')
+
+    app.run(host=host, port=port, threaded=True)
