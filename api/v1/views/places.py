@@ -49,19 +49,21 @@ def delete_places_by_id(place_id):
                  methods=['POST'], strict_slashes=False)
 def post_place(city_id):
     """method to post a new place"""
-    my_city = storage.get('City', city_id)
-    if my_city is None:
-        abort(404)
-    my_user = storage.get('User', request.json['user_id'])
-    if my_user is None:
-        abort(404)
     new_place = request.get_json()
-    if new_place is None:
+    if not new_place:
         abort(400, 'Not a JSON')
     if 'user_id' not in new_place:
         abort(400, 'Missing user_id')
     if 'name' not in new_place:
         abort(400, 'Missing name')
+    my_city = storage.get('City', city_id)
+    if my_city is None:
+        abort(404)
+
+    my_user = storage.get('User', request.json['user_id'])
+    if my_user is None:
+        abort(404)
+
     new_place = Place(name=request.json['name'],
                       city_id=city_id, user_id=request.json['user_id'])
     storage.new(new_place)
@@ -69,15 +71,15 @@ def post_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def put_place(place_id):
     """method to update/put a place by id"""
-    req_place = request.get_json()
-    if not request.json:
-        abort(400, 'Not a JSON')
     mod_place = storage.get('Place', place_id)
     if mod_place is None:
         abort(404)
+    if not request.json:
+        abort(400, 'Not a JSON')
+    req_place = request.get_json()
     for key in req_place:
         if key == 'id' or key == 'user_id' or\
            key == 'city_id' or key == 'created_at' or key == 'updated_at':
