@@ -36,7 +36,7 @@ def get_review_by_id(review_id):
 def delete_reviews_by_id(review_id):
     """method that deletes a review by id"""
     delete_review = storage.get('Review', review_id)
-    if not delete_review:
+    if delete_review is None:
         abort(404)
     storage.delete(delete_review)
     storage.save()
