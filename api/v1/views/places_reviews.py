@@ -38,10 +38,9 @@ def delete_reviews_by_id(review_id):
     delete_review = storage.get('Review', review_id)
     if not delete_review:
         abort(404)
-    else:
-        delete_review.delete()
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(delete_review)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<place_id>/reviews',
