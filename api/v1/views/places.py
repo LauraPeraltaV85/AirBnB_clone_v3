@@ -5,9 +5,7 @@ Places
 from flask import Flask, jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
-from models.city import City
 from models.place import Place
-from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -24,7 +22,7 @@ def get_places_by_city(city_id):
     return jsonify(places_list)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_places_by_id(place_id):
     """method that retrieves a place filter by id"""
     my_place = storage.get('Place', place_id)
@@ -33,14 +31,15 @@ def get_places_by_id(place_id):
     return jsonify(my_place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_places_by_id(place_id):
     """method that deletes a place by id"""
     delete_place = storage.get('Place', place_id)
     if not delete_place:
         abort(404)
     else:
-        delete_place.delete()
+        storage.delete(delete_place)
         storage.save()
         return jsonify({}), 200
 
