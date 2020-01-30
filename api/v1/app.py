@@ -20,7 +20,7 @@ def remove_session(x=None):
 
 
 @app.errorhandler(404)
-def error_404(e):
+def error_404(error):
     """
     handle error
     """
