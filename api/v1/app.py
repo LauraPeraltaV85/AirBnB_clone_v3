@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+AirBnB App
+"""
+
 from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -16,6 +20,7 @@ def remove_session(x=None):
 
 @app.errorhandler(404)
 def error_404(e):
+    """handle error"""
     e = jsonify({'error': 'Not found'})
     return(e)
 
